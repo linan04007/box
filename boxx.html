@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>全能工具箱 · 20+功能</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family: "Microsoft Yahei",sans-serif;}
+    body{background:#f5f7fa;padding:20px;max-width:1100px;margin:0 auto;}
+    .title{text-align:center;margin:20px 0;color:#333;}
+    .title p{color:#666;margin-top:5px;}
+    .tool{background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+    .tool h3{margin-bottom:12px;color:#222;}
+    textarea,input{width:100%;padding:10px;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px;font-size:14px;}
+    button{padding:8px 14px;background:#4299e1;color:white;border:none;border-radius:8px;margin:4px;cursor:pointer;}
+    button:hover{background:#3182ce;}
+    .result{padding:12px;background:#f7fafc;border-radius:8px;margin-top:10px;min-height:50px;white-space:pre-wrap;word-break:break-all;}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    @media(max-width:700px){.row{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+<div class="title">
+  <h1>🔧 全能工具箱</h1>
+  <p>文本、加密、时间、JSON、进制、编码、计算等20+工具</p>
+</div>
+
+<!-- 1 大小写转换 -->
+<div class="tool">
+  <h3>大小写转换</h3>
+  <textarea id="t1" placeholder="输入文字"></textarea>
+  <button onclick="u1()">转大写</button>
+  <button onclick="l1()">转小写</button>
+  <button onclick="cp('r1')">复制</button>
+  <div id="r1" class="result"></div>
+</div>
+
+<!-- 2 字数统计 -->
+<div class="tool">
+  <h3>字数统计</h3>
+  <textarea oninput="count2()" id="t2"></textarea>
+  <div class="result">
+    总字数：<span id="r2a">0</span> &nbsp;&nbsp;
+    不含空格：<span id="r2b">0</span> &nbsp;&nbsp;
+    汉字数：<span id="r2c">0</span>
+  </div>
+</div>
+
+<!-- 3 密码生成 -->
+<div class="tool">
+  <h3>强密码生成</h3>
+  <div class="row">
+    <input type="number" id="len3" value="16" min="4" max="40">
+  </div>
+  <button onclick="gen3()">生成</button>
+  <button onclick="cp('r3')">复制</button>
+  <div id="r3" class="result"></div>
+</div>
+
+<!-- 4 MD5加密 -->
+<div class="tool">
+  <h3>MD5加密</h3>
+  <input id="t4" placeholder="输入字符串">
+  <button onclick="md5_4()">加密</button>
+  <button onclick="cp('r4')">复制</button>
+  <div id="r4" class="result"></div>
+</div>
+
+<!-- 5 SHA256加密 -->
+<div class="tool">
+  <h3>SHA256加密</h3>
+  <input id="t5">
+  <button onclick="sha5()">加密</button>
+  <button onclick="cp('r5')">复制</button>
+  <div id="r5" class="result"></div>
+</div>
+
+<!-- 6 URL编解码 -->
+<div class="tool">
+  <h3>URL编解码</h3>
+  <textarea id="t6"></textarea>
+  <button onclick="en6()">编码</button>
+  <button onclick="de6()">解码</button>
+  <button onclick="cp('r6')">复制</button>
+  <div id="r6" class="result"></div>
+</div>
+
+<!-- 7 Base64编解码 -->
+<div class="tool">
+  <h3>Base64编解码</h3>
+  <textarea id="t7"></textarea>
+  <button onclick="en7()">编码</button>
+  <button onclick="de7()">解码</button>
+  <button onclick="cp('r7')">复制</button>
+  <div id="r7" class="result"></div>
+</div>
+
+<!-- 8 时间戳 ↔ 日期 -->
+<div class="tool">
+  <h3>时间戳 ↔ 日期</h3>
+  <input id="t8">
+  <button onclick="ts2date8()">戳→时间</button>
+  <button onclick="date2ts8()">时间→戳</button>
+  <button onclick="cp('r8')">复制</button>
+  <div id="r8" class="result"></div>
+</div>
+
+<!-- 9 JSON格式化 -->
+<div class="tool">
+  <h3>JSON格式化/压缩</h3>
+  <textarea id="t9"></textarea>
+  <button onclick="fmt9()">格式化</button>
+  <button onclick="min9()">压缩</button>
+  <button onclick="cp('r9')">复制</button>
+  <div id="r9" class="result"></div>
+</div>
+
+<!-- 10 进制转换 -->
+<div class="tool">
+  <h3>进制转换（10/2/8/16）</h3>
+  <div class="row">
+    <input id="t10" placeholder="数字">
+  </div>
+  <button onclick="bin10()">转2进制</button>
+  <button onclick="oct10()">转8进制</button>
+  <button onclick="hex10()">转16进制</button>
+  <div id="r10" class="result"></div>
+</div>
+
+<!-- 11 随机数 -->
+<div class="tool">
+  <h3>随机数</h3>
+  <div class="row">
+    <input id="min11" placeholder="最小值" value="1">
+    <input id="max11" placeholder="最大值" value="100">
+  </div>
+  <button onclick="rand11()">生成</button>
+  <button onclick="cp('r11')">复制</button>
+  <div id="r11" class="result"></div>
+</div>
+
+<!-- 12 颜色拾取器 -->
+<div class="tool">
+  <h3>颜色拾取器</h3>
+  <input type="color" id="c12" oninput="col12()">
+  <button onclick="cp('r12')">复制色值</button>
+  <div id="r12" class="result">#ffffff</div>
+</div>
+
+<!-- 13 文本去重（按行） -->
+<div class="tool">
+  <h3>文本去重（按行）</h3>
+  <textarea id="t13"></textarea>
+  <button onclick="uniq13()">去重</button>
+  <button onclick="cp('r13')">复制</button>
+  <div id="r13" class="result"></div>
+</div>
+
+<!-- 14 文本倒序 -->
+<div class="tool">
+  <h3>文本倒序</h3>
+  <textarea id="t14"></textarea>
+  <button onclick="rev14()">倒序</button>
+  <button onclick="cp('r14')">复制</button>
+  <div id="r14" class="result"></div>
+</div>
+
+<!-- 15 换行替换 -->
+<div class="tool">
+  <h3>换行替换为逗号/空格</h3>
+  <textarea id="t15"></textarea>
+  <button onclick="com15()">逗号</button>
+  <button onclick="spa15()">空格</button>
+  <div id="r15" class="result"></div>
+</div>
+
+<!-- 16 px rem 转换 -->
+<div class="tool">
+  <h3>px ↔ rem (1rem=16px)</h3>
+  <input id="t16">
+  <button onclick="px2rem16()">px→rem</button>
+  <button onclick="rem2px16()">rem→px</button>
+  <div id="r16" class="result"></div>
+</div>
+
+<!-- 17 字符串替换 -->
+<div class="tool">
+  <h3>字符串替换</h3>
+  <div class="row">
+    <input id="old17" placeholder="要替换的文字">
+    <input id="new17" placeholder="替换成">
+  </div>
+  <textarea id="t17"></textarea>
+  <button onclick="rep17()">替换</button>
+  <div id="r17" class="result"></div>
+</div>
+
+<!-- 18 大写金额 -->
+<div class="tool">
+  <h3>数字转大写金额</h3>
+  <input id="t18" placeholder="输入数字">
+  <button onclick="money18()">转换</button>
+  <div id="r18" class="result"></div>
+</div>
+
+<!-- 19 二维码生成 -->
+<div class="tool">
+  <h3>简易二维码（文字转码）</h3>
+  <input id="t19" value="https://">
+  <button onclick="qr19()">生成</button>
+  <div id="r19" class="result"></div>
+</div>
+
+<!-- 20 简易计算器 -->
+<div class="tool">
+  <h3>简易计算器</h3>
+  <input id="t20" placeholder="例如 1+2*3">
+  <button onclick="calc20()">计算</button>
+  <div id="r20" class="result"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sha.js@2.4.11/sha.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+
+<script>
+// 1
+function u1(){document.getElementById('r1').innerText=document.getElementById('t1').value.toUpperCase()}
+function l1(){document.getElementById('r1').innerText=document.getElementById('t1').value.toLowerCase()}
+
+// 2
+function count2(){
+  let s=document.getElementById('t2').value;
+  document.getElementById('r2a').innerText=s.length;
+  document.getElementById('r2b').innerText=s.replace(/\s/g,'').length;
+  document.getElementById('r2c').innerText=(s.match(/[\u4e00-\u9fa5]/g)||[]).length;
+}
+
+// 3
+function gen3(){
+  let c='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=';
+  let l=+document.getElementById('len3').value;
+  let r='';for(let i=0;i<l;i++)r+=c[Math.floor(Math.random()*c.length)];
+  document.getElementById('r3').innerText=r;
+}
+
+// 4 MD5
+function md5_4(){document.getElementById('r4').innerText=md5(document.getElementById('t4').value)}
+
+// 5 SHA256
+function sha5(){let s=sha('sha256').update(document.getElementById('t5').value).digest('hex');document.getElementById('r5').innerText=s}
+
+// 6 URL
+function en6(){document.getElementById('r6').innerText=encodeURIComponent(document.getElementById('t6').value)}
+function de6(){document.getElementById('r6').innerText=decodeURIComponent(document.getElementById('t6').value)}
+
+// 7 Base64
+function en7(){document.getElementById('r7').innerText=btoa(unescape(encodeURIComponent(document.getElementById('t7').value)))}
+function de7(){document.getElementById('r7').innerText=decodeURIComponent(escape(atob(document.getElementById('t7').value)))}
+
+// 8 时间戳
+function ts2date8(){
+  let v=document.getElementById('t8').value.trim();
+  let d=new Date(+v*1000);
+  document.getElementById('r8').innerText=d.toLocaleString();
+}
+function date2ts8(){
+  let v=document.getElementById('t8').value.trim();
+  let t=new Date(v).getTime()/1000;
+  document.getElementById('r8').innerText=Math.floor(t);
+}
+
+// 9 JSON
+function fmt9(){
+  try{let j=JSON.parse(document.getElementById('t9').value);document.getElementById('r9').innerText=JSON.stringify(j,null,2)}
+  catch(e){document.getElementById('r9').innerText='JSON格式错误'}
+}
+function min9(){
+  try{let j=JSON.parse(document.getElementById('t9').value);document.getElementById('r9').innerText=JSON.stringify(j)}
+  catch(e){document.getElementById('r9').innerText='JSON格式错误'}
+}
+
+// 10 进制
+function bin10(){let v=document.getElementById('t10').value;document.getElementById('r10').innerText=parseInt(v).toString(2)}
+function oct10(){let v=document.getElementById('t10').value;document.getElementById('r10').innerText=parseInt(v).toString(8)}
+function hex10(){let v=document.getElementById('t10').value;document.getElementById('r10').innerText=parseInt(v).toString(16)}
+
+// 11 随机数
+function rand11(){
+  let min=+document.getElementById('min11').value;
+  let max=+document.getElementById('max11').value;
+  let r=Math.floor(Math.random()*(max-min+1))+min;
+  document.getElementById('r11').innerText=r;
+}
+
+// 12 颜色
+function col12(){let c=document.getElementById('c12').value;document.getElementById('r12').innerText=c}
+
+// 13 去重
+function uniq13(){
+  let s=document.getElementById('t13').value.split('\n');
+  let u=[...new Set(s)];
+  document.getElementById('r13').innerText=u.join('\n');
+}
+
+// 14 倒序
+function rev14(){
+  let s=document.getElementById('t14').value.split('').reverse().join('');
+  document.getElementById('r14').innerText=s;
+}
+
+// 15 换行替换
+function com15(){document.getElementById('r15').innerText=document.getElementById('t15').value.replace(/\n/g,',')}
+function spa15(){document.getElementById('r15').innerText=document.getElementById('t15').value.replace(/\n/g,' ')}
+
+// 16 px rem
+function px2rem16(){let v=document.getElementById('t16').value;document.getElementById('r16').innerText=(v/16).toFixed(3)+'rem'}
+function rem2px16(){let v=document.getElementById('t16').value;document.getElementById('r16').innerText=v*16+'px'}
+
+// 17 替换
+function rep17(){
+  let t=document.getElementById('t17').value;
+  let o=document.getElementById('old17').value;
+  let n=document.getElementById('new17').value;
+  document.getElementById('r17').innerText=t.replaceAll(o,n);
+}
+
+// 18 大写金额
+function money18(){
+  let n=document.getElementById('t18').value;
+  let c='零壹贰叁肆伍陆柒捌玖';
+  let u='元拾佰仟万拾佰仟亿';
+  let s='';
+  for(let i=0;i<n.length;i++)s+=c[n[i]]+u[n.length-i-1];
+  document.getElementById('r18').innerText=s+'整';
+}
+
+// 19 二维码
+async function qr19(){
+  let t=document.getElementById('t19').value;
+  let url=await QRCode.toDataURL(t,{width:120});
+  document.getElementById('r19').innerHTML='<img src="'+url+'">';
+}
+
+// 20 计算器
+function calc20(){
+  try{let r=eval(document.getElementById('t20').value);document.getElementById('r20').innerText=r}
+  catch(e){document.getElementById('r20').innerText='表达式错误'}
+}
+
+// 复制
+function cp(id){
+  let t=document.getElementById(id).innerText;
+  navigator.clipboard.writeText(t).then(()=>alert('已复制'));
+}
+</script>
+</body>
+</html>
